@@ -1,0 +1,28 @@
+
+
+
+.container-all {
+    display: flex;
+    flex-direction: row;
+    flex-flow: nowrap;
+    justify-content: space-evenly;
+}
+
+.container-aside {
+    width: 24vw;
+    margin-left: 1%;
+    flex:auto;
+}
+
+.current-container {
+    flex: 0 0 40vw;
+}
+
+#current-container-dynamic {
+    border: 2px #455a64;
+}
+
+#header-text {
+    /*text-align: center;*/
+    margin-top: 0px;
+}
