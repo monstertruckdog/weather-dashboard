@@ -1,3 +1,10 @@
+/*
+h4 {
+    font-size: 18px;
+    font-weight: 700;
+}
+*/
+
 .container-all {
     display: inline-flex;
     flex-direction: column;
@@ -13,15 +20,51 @@
 }
 
 .container-master-weather {
+    /*
     margin-top: 8px;
     display: flex;
     flex-direction: column;
     flex-flow: nowrap;
     justify-content: space-evenly;
+    */
 }
 
+.all-weather-container {
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    flex-flow: nowrap;
+    justify-content: space-evenly;
+}
 .current-weather-container {
-    flex: 0 0 calc(100vw - 26vw);
+    width: 72vw;
+    box-sizing: border-box;
+    /*flex: 0 0 calc(100vw - 26vw);*/
+}
+
+.uvi-minimal {
+    background-color: #4C9329;
+    color: white;
+}
+
+.uvi-low {
+    background-color: yellow;
+    color: white;
+}
+
+.uvi-moderate {
+    background-color: orange;
+    color: white;
+}
+
+.uvi-high {
+    background-color: red;
+    color: white;
+}
+
+.uvi-very-high {
+    background-color: purple;
+    color: white;
 }
 
 #current-container-dynamic {
