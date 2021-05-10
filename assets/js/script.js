@@ -34,7 +34,7 @@ function getCityValue() {
 
 
 function getLonLat() {
-    var requestCurrentCity = 'http://api.openweathermap.org/data/2.5/weather?q=' + cityName + '&appid=' + key
+    var requestCurrentCity = 'https://api.openweathermap.org/data/2.5/weather?q=' + cityName + '&appid=' + key
     
     fetch(requestCurrentCity)
         .then(function (response) {
@@ -69,7 +69,7 @@ async function getCurrentWeather() {
     getLonLat();
     console.log(`LONGITUDE / LATITUDE (inside getCurrentWeather:  ${longitude} / ${latitude}}`);
     var currentWeatherValuesArray = []
-    var requestCurrentCity =  'http://api.openweathermap.org/data/2.5/onecall?lat=' + latitude + '&lon=' + longitude + '&exclude=hourly,minutely,daily,alerts&appid=' + key + '&units=imperial'
+    var requestCurrentCity =  'https://api.openweathermap.org/data/2.5/onecall?lat=' + latitude + '&lon=' + longitude + '&exclude=hourly,minutely,daily,alerts&appid=' + key + '&units=imperial'
     
     fetch(requestCurrentCity)
         .then(function (response) {
