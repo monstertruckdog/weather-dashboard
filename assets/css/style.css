@@ -1,22 +1,31 @@
 .container-all {
-    display: flex;
-    flex-direction: row;
+    display: inline-flex;
+    flex-direction: column;
     flex-flow: nowrap;
     justify-content: space-evenly;
+    align-items: flex-start;
+
 }
 
 .container-aside {
     width: 24vw;
     margin-left: 1%;
-    flex:auto;
 }
 
-.current-container {
-    flex: 0 0 40vw;
+.container-master-weather {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    flex-flow: nowrap;
+    justify-content: space-evenly;
+}
+
+.current-weather-container {
+    flex: 0 0 calc(100vw - 26vw);
 }
 
 #current-container-dynamic {
-    border: 2px #455a64;
+    border: 1px solid #E0E0E0;
 }
 
 #header-text {
