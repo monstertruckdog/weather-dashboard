@@ -1,10 +1,3 @@
-/*
-h4 {
-    font-size: 18px;
-    font-weight: 700;
-}
-*/
-
 .container-all {
     display: inline-flex;
     flex-direction: column;
@@ -36,35 +29,64 @@ h4 {
     flex-flow: nowrap;
     justify-content: space-evenly;
 }
+
 .current-weather-container {
     width: 72vw;
     box-sizing: border-box;
     /*flex: 0 0 calc(100vw - 26vw);*/
 }
 
-.uvi-minimal {
+.current-li {
+    margin-bottom: 18px;
+}
+
+.current-li:last-child {
+    margin-bottom: 6px;
+}
+
+#uvi-minimal {
     background-color: #4C9329;
     color: white;
+    display: inline-block;
+    width: 48px;
+    text-align: center;
+    border-radius: 3px;
 }
 
-.uvi-low {
+#uvi-low {
     background-color: yellow;
     color: white;
+    display: inline-block;
+    width: 48px;
+    text-align: center;
+    border-radius: 3px;
 }
 
-.uvi-moderate {
+#uvi-moderate {
     background-color: orange;
     color: white;
+    display: inline-block;
+    width: 48px;
+    text-align: center;
+    border-radius: 3px;
 }
 
-.uvi-high {
+#uvi-high {
     background-color: red;
     color: white;
+    display: inline-block;
+    width: 48px;
+    text-align: center;
+    border-radius: 3px;
 }
 
-.uvi-very-high {
+#uvi-very-high {
     background-color: purple;
     color: white;
+    display: inline-block;
+    width: 48px;
+    text-align: center;
+    border-radius: 3px;
 }
 
 #current-container-dynamic {

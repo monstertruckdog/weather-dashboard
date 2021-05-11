@@ -22,7 +22,8 @@ function currentWeather() {
     console.log(`from getCurrentWeather - CURRENT DATE:  ${currentDate}`);
     currentWeatherContainer.append('<h4 id="city-name">' + cityName + ' <span id="current-date">(' + currentDate + ')</span></h4>');
 
-    getCurrentWeather();
+    // RENOVATION getCurrentWeather();
+    getLonLat();
 
 };
 
@@ -45,12 +46,10 @@ function getLonLat() {
                     console.log(data);
                     var longitude = data.coord.lon
                     var latitude = data.coord.lat
-                    var windspeed_test = data.wind.speed
+                    getCurrentWeather(longitude, latitude);
                     console.log(`LONGITUDE:  ${longitude}`);
-                    console.log(`WINDSPEED:  ${windspeed_test}`);
                     console.log(`LATITUDE:  ${latitude}`);
-                    return longitude, latitude
-                    // return response.json();
+                    return { longitude, latitude }
                 });
             } else {
                 console.log(`AN ERROR HAS OCCURRED IN THE GET METHOD TO THE API.  PLEASE REVIEW AND TRY AGAIN`)
@@ -65,35 +64,77 @@ function getLonLat() {
 // HUMIDITY
 // UV INDEX
 
-async function getCurrentWeather() {
-    getLonLat();
-    console.log(`LONGITUDE / LATITUDE (inside getCurrentWeather:  ${longitude} / ${latitude}}`);
-    var currentWeatherValuesArray = []
-    var requestCurrentCity =  'https://api.openweathermap.org/data/2.5/onecall?lat=' + latitude + '&lon=' + longitude + '&exclude=hourly,minutely,daily,alerts&appid=' + key + '&units=imperial'
+function getCurrentWeather(longitude, latitude) {
+    // RENOVATION getLonLat();
+    if (longitude && latitude) {
+        console.log(`LONGITUDE / LATITUDE (inside getCurrentWeather:  ${longitude} / ${latitude}}`);
+        var currentWeatherValuesArray = [];
+        var requestCurrentCity =  'https://api.openweathermap.org/data/2.5/onecall?lat=' + latitude + '&lon=' + longitude + '&exclude=hourly,minutely,daily,alerts&appid=' + key + '&units=imperial'
     
-    fetch(requestCurrentCity)
-        .then(function (response) {
-            console.log(response.status);
-            if (response.ok) {
-                console.log(`response call was OK`);
-                response.json().then(function (data) {
-                    console.log(data);
-                    currentWeatherValuesArray.push(data.current.temp);
-                    currentWeatherValuesArray.push(data.current.wind_speed);
-                    currentWeatherValuesArray.push(data.current.humidity);
-                    currentWeatherValuesArray.push(data.current.uvi);
+        fetch(requestCurrentCity)
+            .then(function (response) {
+                console.log(response.status);
+                if (response.ok) {
+                    console.log(`response call was OK`);
+                    response.json().then(function (data) {
+                        console.log(data);
+                        currentWeatherValuesArray.push(data.current.temp);
+                        currentWeatherValuesArray.push(data.current.wind_speed);
+                        currentWeatherValuesArray.push(data.current.humidity);
+                        currentWeatherValuesArray.push(data.current.uvi);
 
-                    console.log(`LONGITUDE:  ${longitude}`);
-                    console.log(`LATITUDE:  ${latitude}`);
-                    console.log(`CURRENT WEATHER VALUES:  ${currentWeatherValuesArray}`)
-                    // return response.json();
+                        console.log(`LONGITUDE:  ${longitude}`);
+                        console.log(`LATITUDE:  ${latitude}`);
+                        console.log(`CURRENT WEATHER VALUES:  ${currentWeatherValuesArray}`)
+
+                        var currentWeatherValuesList = $('<ul>');
+                        currentWeatherValuesList.attr('class', 'current-weather-values-ul');
+                        currentWeatherContainer.append(currentWeatherValuesList);
+                        // RENOVATION currentWeatherValuesList.append('<li class="temp-li">' + currentWeatherValuesArray[0] + '°F</li>');
+                        // RENOVATION currentWeatherValuesList.append('<li class="wind-li">' + currentWeatherValuesArray[1] + 'MPH</li>');
+                        // RENOVATION currentWeatherValuesList.append('<li class="humidity-li">' + currentWeatherValuesArray[2] + '%</li>');
+                        // RENOVATION currentWeatherValuesList.append('<li class="uvi-li"><span class="uvi-li-span>' + currentWeatherValuesArray[3] + '</span></li>');
+                        currentWeatherValuesList.append('<li class="current-li temp-li">TEMPERATURE:  ' + data.current.temp + '°F</li>');
+                        currentWeatherValuesList.append('<li class="current-li wind-li">WIND SPEED:  ' + data.current.wind_speed + 'MPH</li>');
+                        currentWeatherValuesList.append('<li class="current-li humidity-li">HUMIDITY:  ' + data.current.humidity + '%</li>');
+                        currentWeatherValuesList.append('<li class="current-li uvi-li">UV INDEX:  <span class="uvi-li-span">' + data.current.uvi + '</span></li>');
+                        /*
+                        $( document ).ready(function() {
+                            if (data.current.uvi >= 0 && data.current.uvi < 3) {
+                                console.log(`INSIDE SPAN`)
+                                var uVIndex = $('.uvi-li-span');
+                                uVIndex.attr('id', 'uvi-minimal');
+                            } else if (data.current.uvi >= 3 && data.current.uvi < 5) {
+                                uVIndex.attr('id', 'uvi-low');
+                            } else if (data.current.uvi >= 5 && data.current.uvi < 7) {
+                                uVIndex.attr('id', 'uvi-moderate');
+                            } else if (data.current.uvi >= 7 && data.current.uvi < 10) {
+                                uVIndex.attr('id', 'uvi-high');
+                            } else if (data.current.uvi >= 10) {
+                                uVIndex.attr('id', 'uvi-very-high');
+                            };
+                        });
+                        */
+                        if (data.current.uvi >= 0 && data.current.uvi < 3) {
+                            console.log(`INSIDE SPAN`)
+                            var uVIndex = $('.uvi-li-span');
+                            $('.uvi-li-span').attr('id', 'uvi-minimal');
+                        } else if (data.current.uvi >= 3 && data.current.uvi < 5) {
+                            $('.uvi-li-span').attr('id', 'uvi-low');
+                        } else if (data.current.uvi >= 5 && data.current.uvi < 7) {
+                            uVIndex.attr('id', 'uvi-moderate');
+                        } else if (data.current.uvi >= 7 && data.current.uvi < 10) {
+                            uVIndex.attr('id', 'uvi-high');
+                        } else if (data.current.uvi >= 10) {
+                            uVIndex.attr('id', 'uvi-very-high');
+                        };
                 });
             } else {
                 console.log(`AN ERROR HAS OCCURRED IN THE GET METHOD TO THE API.  PLEASE REVIEW AND TRY AGAIN`)
                 return;
             }
         });
-
+    /* RENOVATION
     var currentWeatherValuesList = $('<ul>');
     currentWeatherValuesList.attr('class', 'current-weather-values-ul');
     currentWeatherContainer.append(currentWeatherValuesList);
@@ -101,10 +142,10 @@ async function getCurrentWeather() {
     currentWeatherValuesList.append('<li class="wind-li">' + currentWeatherValuesArray[1] + 'MPH</li>');
     currentWeatherValuesList.append('<li class="humidity-li">' + currentWeatherValuesArray[2] + '%</li>');
     currentWeatherValuesList.append('<li class="uvi-li"><span class="uvi-li-span>' + currentWeatherValuesArray[3] + '</span></li>');
-    
+    */
     // Used UV Index category definitions from National Weather Service Climate Prediction Center:
     // URL:  https://www.cpc.ncep.noaa.gov/products/stratosphere/uv_index/uv_info.shtml
-
+    /* RENOVATION
     if (currentWeatherValuesArray[3] >= 0 && currentWeatherValuesArray[3] < 3) {
         $('.uvi-li-span').setAttr('id', 'uvi-minimal');
     } else if (currentWeatherValuesArray[3] >= 3 && currentWeatherValuesArray[3] < 5) {
@@ -115,5 +156,6 @@ async function getCurrentWeather() {
         $('.uvi-li-span').setAttr('id', 'uvi-high');
     } else if (currentWeatherValuesArray[3] >= 10) {
         $('.uvi-li-span').setAttr('id', 'uvi-very-high');
+    */
     };
 };
