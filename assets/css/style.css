@@ -48,6 +48,7 @@
     /*width: 72vw;*/
     box-sizing: border-box;
     /*flex: 0 0 calc(100vw - 26vw);*/
+    margin-top: 1rem;
 }
 
 .fiveday-card-container {
@@ -59,7 +60,7 @@
 }
 
 .fiveday-card {
-    background-color: #455a64;
+    background-color: #90a4ae;
     color: white;
     flex: 0 0 100px;
 }
@@ -75,7 +76,7 @@
 
 #uvi-low {
     background-color: yellow;
-    color: white;
+    color: #000000;
     display: inline-block;
     width: 48px;
     text-align: center;
@@ -110,11 +111,30 @@
 }
 
 #current-container-dynamic,
-#fiveday-container-dynamic {
+.fiveday-container,
+#fdc-card {
     border: 1px solid #E0E0E0;
 }
 
 #header-text {
     /*text-align: center;*/
     margin-top: 0px;
+}
+
+#fdc-card {
+    padding: 1% 0 0 1%;
+    width: 10rem;
+    height: 10rem;
+    margin-bottom: 1rem;
+}
+
+#date {
+    font-weight: bolder;
+}
+
+#temp,
+#windspeed,
+#humidity {
+    font-size: 10px;
+    margin-bottom: 1rem;
 }
