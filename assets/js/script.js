@@ -11,8 +11,13 @@ var currentDate = moment().format('MM/DD/YYYY');
 var cityName;
 var longitude;
 var latitude;
+var cityStore = [];
 
 var key = `e8a298c777dff96133e6b579f54b4339`
+
+function storeCity() {
+    localStorage.setItem('CITY', JSON.stringify(cityStore));
+}
 
 function currentWeather() {
     
@@ -32,6 +37,8 @@ function currentWeather() {
 function getCityValue() {
     cityName = $('#city-entry').val();
     console.log(`cityName SUBMITTED:  ${cityName}`);
+    cityStore.push(cityName);
+    storeCity(); //localStorage.setItem('CITY', JSON.stringify(cityStore));
     currentWeather();
     getLonLat();
     console.log(`getLonLat has ended; daisy chain of functions has begun`);
@@ -64,12 +71,6 @@ function getLonLat() {
             }
         })
 };
-
-
-// TEMP
-// WIND
-// HUMIDITY
-// UV INDEX
 
 function getCurrentWeather(longitude, latitude) {
     if (longitude && latitude) {

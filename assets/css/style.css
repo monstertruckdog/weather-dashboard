@@ -7,6 +7,14 @@
 
 }
 
+.all-aside-container {
+    display: inline-flex;
+    flex-direction: column;
+    flex-flow: column-wrap;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+
 .container-aside {
     width: 24vw;
     margin-left: 1%;
