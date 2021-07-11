@@ -4,6 +4,7 @@ var currentWeatherHeadCity = $('<h4>');
 var currentWeatherHeadDate = $('<span>');
 var currentWeatherUoList = $('<ul>');
 var currentWeatherListItem = $('<li>');
+var searchList = $('.recent-search-list');
 var cityEntry = $('#city-entry');
 var citySubmitBtn = $('#submit-btn')
 
@@ -18,6 +19,26 @@ var key = `e8a298c777dff96133e6b579f54b4339`
 function storeCity() {
     localStorage.setItem('CITY', JSON.stringify(cityStore));
 }
+
+function displaySearchedCities() {
+    $('.recent-search-list').innerHTML = "";
+    var storedSearches = JSON.parse(localStorage.getItem('CITY'))
+    console.log(`--> storedSearches:  ${storedSearches}`)
+    console.log(`--> storedSearches Length:  ${storedSearches.length}`)
+    
+    for (var i = 0; i < storedSearches.length; i++) {
+        // var todo = todos[i];
+        var searchListItem = document.createElement('li');
+        var searchBtn = document.createElement('button');
+        searchBtn.setAttribute(`id`, `search-city-${storedSearches[i]}`);
+        searchBtn.setAttribute(`class`, `stored-search-btn`);
+        searchBtn.setAttribute(`onclick`, `getSavedCity()`)
+        searchBtn.className += ` btn blue-grey darken-2 ${storedSearches[i]}`
+        searchBtn.textContent = storedSearches[i];
+        searchList.append(searchListItem);
+        searchListItem.append(searchBtn);
+    }
+};
 
 function currentWeather() {
     
@@ -39,6 +60,7 @@ function getCityValue() {
     console.log(`cityName SUBMITTED:  ${cityName}`);
     cityStore.push(cityName);
     storeCity(); //localStorage.setItem('CITY', JSON.stringify(cityStore));
+    displaySearchedCities();
     currentWeather();
     getLonLat();
     console.log(`getLonLat has ended; daisy chain of functions has begun`);
@@ -47,7 +69,18 @@ function getCityValue() {
 
 };
 
+function getSavedCity() {
+    event.preventDefault();
+    cityName = $(event.target).text();
+    console.log(`--> cityName (variable value - from getSavedCity):  ${cityName}`);
+    console.log(`--> cityName (expression value - from getSavedCity):  ${$(event.target).text()}`);
+    currentWeather();
+    getLonLat();
+}
 
+function init() {
+    displaySearchedCities();
+}
 function getLonLat() {
     var requestCurrentCity = 'https://api.openweathermap.org/data/2.5/weather?q=' + cityName + '&appid=' + key
     
@@ -173,4 +206,6 @@ function getFiveDayWeather(longitude, latitude) {
         return;
     }
     
-}
+};
+
+init();

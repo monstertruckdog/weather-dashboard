@@ -52,6 +52,10 @@
     margin-bottom: 6px;
 }
 
+.stored-search-btn {
+    margin-bottom: 1rem;
+}
+
 .fiveday-container {
     /*width: 72vw;*/
     box-sizing: border-box;
