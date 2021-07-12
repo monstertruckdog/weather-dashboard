@@ -1,5 +1,4 @@
 var currentWeatherContainer = $('.current-weather-container');
-// var currentWeatherBorder = $('#current-container-dynamic');
 var currentWeatherHeadCity = $('<h4>');
 var currentWeatherHeadDate = $('<span>');
 var currentWeatherUoList = $('<ul>');
@@ -7,6 +6,7 @@ var currentWeatherListItem = $('<li>');
 var searchList = $('.recent-search-list');
 var cityEntry = $('#city-entry');
 var citySubmitBtn = $('#submit-btn')
+var fivedayWeatherContainer = $('.fiveday-container');
 
 var currentDate = moment().format('MM/DD/YYYY');
 var cityName;
@@ -60,7 +60,6 @@ function displayAllSearchedCities() {
         console.log(`--> storedSearches Length:  ${storedSearches.length}`)
     
         for (var i = 0; i < storedSearches.length; i++) {
-            // var todo = todos[i];
             var searchListItem = document.createElement('li');
             var searchBtn = document.createElement('button');
             searchBtn.setAttribute(`id`, `search-city-${storedSearches[i]}`);
@@ -85,18 +84,12 @@ function currentWeather() {
     console.log(`from getCurrentWeather - CITY NAME:  ${cityName}`);
     console.log(`from getCurrentWeather - CURRENT DATE:  ${currentDate}`);
     currentWeatherContainer.append('<h4 id="city-name">' + cityName + ' <span id="current-date">(' + currentDate + ')</span></h4>');
-
-    // RENOVATION getCurrentWeather();
-    //-->getLonLat();
-
 };
 
 function getCityValue() {
     cityName = $('#city-entry').val();
     console.log(`cityName SUBMITTED:  ${cityName}`);
-    // cityStore.push(cityName);
-    storeCity(); //localStorage.setItem('CITY', JSON.stringify(cityStore));
-    // displaySearchedCities();
+    storeCity();
     currentWeather();
     getLonLat();
 };
@@ -195,12 +188,17 @@ function getFiveDayWeather(longitude, latitude) {
                 if (response.ok) {
                     console.log(`response call was OK`);
                     $('.fiveday-container').html('');
+                    // searchBtn.className += ` btn blue-grey darken-2 ${storedSearches[i]}`
+                    // document.getElementsByClassName('fiveday-container').setAttribute('id', 'fiveday-container-dynamic');
+                    
+                    // document.getElementsByClassName("fiveday-container").innerHTML = "";
+                    fivedayWeatherContainer.attr('id', 'fiveday-container-dynamic');
                     response.json().then(function (data) {
                         console.log('DATA', data);
                         
                         console.log(`LONGITUDE:  ${longitude}`);
                         console.log(`LATITUDE:  ${latitude}`);
-                        
+                        // document.getElementsByClassName("fiveday-container").id = `fiveday-container-dynamic`;
                         $('.fiveday-container').append('<h4 id="fiveday-title">5-Day Forecast:</h4>');
 
                         var fiveDayData = []
