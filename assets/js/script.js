@@ -17,27 +17,63 @@ var cityStore = [];
 var key = `e8a298c777dff96133e6b579f54b4339`
 
 function storeCity() {
-    localStorage.setItem('CITY', JSON.stringify(cityStore));
+    console.log(`--> CONTENTS OF cityStore:  ${cityStore}`)
+    console.log(`--> INDEX OF cityStore CONTENTS:  ${cityStore.indexOf(cityName)}`)
+    console.log(`--> indexOf(cityName):  ${cityStore.indexOf(cityName) === -1}`);
+    if (cityStore.indexOf(cityName) === -1) {
+        cityStore.push(cityName);
+        localStorage.setItem('CITY', JSON.stringify(cityStore));
+        displayNewSearchedCity();
+        
+    } else {
+        return;
+    }
+    // displaySearchedCities();
 }
 
-function displaySearchedCities() {
-    $('.recent-search-list').innerHTML = "";
-    var storedSearches = JSON.parse(localStorage.getItem('CITY'))
-    console.log(`--> storedSearches:  ${storedSearches}`)
-    console.log(`--> storedSearches Length:  ${storedSearches.length}`)
-    
-    for (var i = 0; i < storedSearches.length; i++) {
-        // var todo = todos[i];
+function displayNewSearchedCity() {
+    console.log(`VALUE OF cityName:  ${cityName}`);
+    console.log(`VALUE OF cityStore AT INDEX cityStore.length:  ${cityStore[cityStore.length - 1]}`)
+    if (cityName === cityStore[cityStore.length - 1]) {
         var searchListItem = document.createElement('li');
         var searchBtn = document.createElement('button');
-        searchBtn.setAttribute(`id`, `search-city-${storedSearches[i]}`);
+        // searchBtn.setAttribute(`id`, `search-city-${storedSearches}`);
         searchBtn.setAttribute(`class`, `stored-search-btn`);
-        searchBtn.setAttribute(`onclick`, `getSavedCity()`)
-        searchBtn.className += ` btn blue-grey darken-2 ${storedSearches[i]}`
-        searchBtn.textContent = storedSearches[i];
+        searchBtn.setAttribute(`onclick`, `goSavedCity()`)
+        searchBtn.className += ` btn blue-grey darken-2`
+        searchBtn.textContent = cityName;
         searchList.append(searchListItem);
         searchListItem.append(searchBtn);
+    } else {
+        return;
     }
+}
+
+function displayAllSearchedCities() {
+    // $('.recent-search-list').innerHTML = "";
+    document.getElementsByClassName("recent-search-list").innerHTML = "";
+    var storedSearches = '';
+    var storedSearches = JSON.parse(localStorage.getItem('CITY'))
+    console.log(`--> storedSearches CONTENT:  ${storedSearches}`)
+    if (storedSearches) {
+        console.log(`--> storedSearches:  ${storedSearches}`)
+        console.log(`--> storedSearches Length:  ${storedSearches.length}`)
+    
+        for (var i = 0; i < storedSearches.length; i++) {
+            // var todo = todos[i];
+            var searchListItem = document.createElement('li');
+            var searchBtn = document.createElement('button');
+            searchBtn.setAttribute(`id`, `search-city-${storedSearches[i]}`);
+            searchBtn.setAttribute(`class`, `stored-search-btn`);
+            searchBtn.setAttribute(`onclick`, `goSavedCity()`)
+            searchBtn.className += ` btn blue-grey darken-2 ${storedSearches[i]}`
+            searchBtn.textContent = storedSearches[i];
+            searchList.append(searchListItem);
+            searchListItem.append(searchBtn);
+        } 
+    } else {
+        return;
+    } 
 };
 
 function currentWeather() {
@@ -58,28 +94,24 @@ function currentWeather() {
 function getCityValue() {
     cityName = $('#city-entry').val();
     console.log(`cityName SUBMITTED:  ${cityName}`);
-    cityStore.push(cityName);
+    // cityStore.push(cityName);
     storeCity(); //localStorage.setItem('CITY', JSON.stringify(cityStore));
-    displaySearchedCities();
+    // displaySearchedCities();
     currentWeather();
     getLonLat();
-    console.log(`getLonLat has ended; daisy chain of functions has begun`);
-    //getCurrentWeather(longitude, latitude);
-    //getFiveDayWeather(longitude, latitude);
-
 };
 
-function getSavedCity() {
+function goSavedCity() {
     event.preventDefault();
     cityName = $(event.target).text();
-    console.log(`--> cityName (variable value - from getSavedCity):  ${cityName}`);
-    console.log(`--> cityName (expression value - from getSavedCity):  ${$(event.target).text()}`);
+    console.log(`--> cityName (variable value - from goSavedCity):  ${cityName}`);
+    console.log(`--> cityName (expression value - from goSavedCity):  ${$(event.target).text()}`);
     currentWeather();
     getLonLat();
 }
 
 function init() {
-    displaySearchedCities();
+    displayAllSearchedCities();
 }
 function getLonLat() {
     var requestCurrentCity = 'https://api.openweathermap.org/data/2.5/weather?q=' + cityName + '&appid=' + key
