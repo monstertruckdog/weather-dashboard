@@ -57,6 +57,10 @@
     width: 12rem;
 }
 
+.warnings {
+    color: #b80000;
+}
+
 .fiveday-container {
     /*width: 72vw;*/
     box-sizing: border-box;

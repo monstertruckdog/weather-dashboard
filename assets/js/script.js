@@ -4,6 +4,9 @@ var currentWeatherHeadDate = $('<span>');
 var currentWeatherUoList = $('<ul>');
 var currentWeatherListItem = $('<li>');
 var searchList = $('.recent-search-list');
+var eEntryResponse = document.getElementById('entry-response');
+var eWarnings = document.getElementById('warning');
+var eWarningText = document.getElementById('warning-text');
 var cityEntry = $('#city-entry');
 var citySubmitBtn = $('#submit-btn')
 var fivedayWeatherContainer = $('.fiveday-container');
@@ -20,8 +23,10 @@ function storeCity() {
     console.log(`--> CONTENTS OF cityStore:  ${cityStore}`)
     console.log(`--> INDEX OF cityStore CONTENTS:  ${cityStore.indexOf(cityName)}`)
     console.log(`--> indexOf(cityName):  ${cityStore.indexOf(cityName) === -1}`);
+    cityStore.forEach((city) => city.toLowerCase());
+    console.log(`--> CONTENTS OF cityStore (after forEach):  `, cityStore);
     if (cityStore.indexOf(cityName) === -1) {
-        cityStore.push(cityName);
+        cityStore.push(cityName.toLowerCase());
         localStorage.setItem('CITY', JSON.stringify(cityStore));
         displayNewSearchedCity();
         
@@ -75,24 +80,64 @@ function displayAllSearchedCities() {
     } 
 };
 
-function currentWeather() {
-    
-    currentWeatherContainer.attr('id', 'current-container-dynamic');
-    currentWeatherContainer.text('');
-    currentWeatherHeadCity.text(cityName);
-    currentWeatherHeadDate.text(currentDate);
-    console.log(`from getCurrentWeather - CITY NAME:  ${cityName}`);
-    console.log(`from getCurrentWeather - CURRENT DATE:  ${currentDate}`);
-    currentWeatherContainer.append('<h4 id="city-name">' + cityName + ' <span id="current-date">(' + currentDate + ')</span></h4>');
+function cityNameValidator(name) {
+    if (/[^a-zA-Z\s-]/.test(name)) {
+        console.log(`invalid city name`)
+        eWarningText.append(`City name is invalid`);
+    }
+}
+
+function cityNameFormatter(name) {
+    cityNameValidator(name);
+    console.log(`--> 'name' VALUE:  `, name)
+    nameSplit = name.split('');
+    if (nameSplit.includes(' ') === true) {
+        console.log('City name contains a space character (\' \')');
+        firstLetter = nameSplit.shift().toUpperCase();
+        nameSplit.unshift(firstLetter);
+        console.log(`--> nameSplit (after unshift):  `, nameSplit)
+        for (let i = 0; i < nameSplit.length; i++) {
+            if (nameSplit[i] === ' ') {
+                firstLetterNextWord = nameSplit[i + 1]
+                firstLetterNextWord.toUpperCase();
+                nameSplit.splice(nameSplit[i + 1], 1, firstLetterNextWord)
+                nameCleaned = nameSplit.join('');
+                storeCity(cityName);
+                currentWeather(nameCleaned);
+                getLonLat();
+            }
+            
+        }
+        nameCleaned = nameSplit.join('');
+    } else {
+        console.log(`--> 'name' VALUE at [0]:  `, nameSplit[0]);
+        console.log(`--> nameSplit (00) (before shift declared):  `,  nameSplit);
+        firstLetter = nameSplit.shift().toUpperCase();
+        nameSplit.unshift(firstLetter);
+        nameCleaned = nameSplit.join('');
+        console.log(`--> nameCleaned:  `,  nameCleaned);
+        storeCity(cityName);
+        currentWeather(nameCleaned);
+        getLonLat();
+    }
+}
+
+function currentWeather(nameCleaned) {
+    if (/[^a-zA-Z\s-]/.test(nameCleaned)) {
+        currentWeatherContainer.attr('id', 'current-container-dynamic');
+        currentWeatherContainer.text('');
+    } else {
+        currentWeatherContainer.attr('id', 'current-container-dynamic');
+        currentWeatherContainer.text('');
+        currentWeatherHeadCity.text(nameCleaned);
+        currentWeatherHeadDate.text(currentDate);
+        console.log(`from getCurrentWeather - CITY NAME:  ${cityName}`);
+        console.log(`from getCurrentWeather - CURRENT DATE:  ${currentDate}`);
+        currentWeatherContainer.append('<h4 id="city-name">' + nameCleaned + ' <span id="current-date">(' + currentDate + ')</span></h4>');
+    };
 };
 
-function getCityValue() {
-    cityName = $('#city-entry').val();
-    console.log(`cityName SUBMITTED:  ${cityName}`);
-    storeCity();
-    currentWeather();
-    getLonLat();
-};
+
 
 function goSavedCity() {
     event.preventDefault();
@@ -236,6 +281,18 @@ function getFiveDayWeather(longitude, latitude) {
         return;
     }
     
+};
+
+function getCityValue() {
+    while (eWarningText.hasChildNodes()) {
+        eWarningText.removeChild(node.firstChild);
+    }
+    cityName = $('#city-entry').val().trim().toLowerCase();
+    console.log(`cityName SUBMITTED:  ${cityName}`);
+    cityNameFormatter(cityName);
+    // storeCity(cityName);
+    // currentWeather(nameCleaned);
+    // getLonLat();
 };
 
 init();
