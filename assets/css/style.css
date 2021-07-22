@@ -20,14 +20,35 @@
     margin-left: 1%;
 }
 
-.container-master-weather {
-    /*
-    margin-top: 8px;
-    display: flex;
-    flex-direction: column;
-    flex-flow: nowrap;
-    justify-content: space-evenly;
-    */
+.modal.modal-fixed-footer .modal-content,
+.modal.modal-footer {
+    color: white;
+    background-color: #94a3ad;
+    height: 100%;
+}
+
+.modal-fixed-footer {
+    margin-top: 2rem;
+    float: right;
+}
+
+.modal h5 {
+    text-align: center;
+}
+
+.modal a {
+    text-decoration: none;
+    color: white;
+}
+
+.modal p {
+    size: 6px;
+    margin: 2rem;
+    text-align: center;
+}
+
+.modal td {
+    size: 4px;
 }
 
 .all-weather-container {
@@ -127,10 +148,15 @@
     border-radius: 3px;
 }
 
-#current-container-dynamic,
-#fiveday-container-dynamic,
+#current-container-border,
+#five-container-border,
 #fdc-card {
     border: 1px solid #E0E0E0;
+}
+
+#current-container-border-hide,
+#fiveday-container-border-hide {
+    border: 0;
 }
 
 #header-text {
@@ -154,4 +180,13 @@
 #humidity {
     font-size: 10px;
     margin-bottom: 1rem;
+}
+
+#city-name {
+    text-transform: capitalize;
+}
+
+#modal-table {
+    margin-top: 2rem;
+    width: 98%;
 }

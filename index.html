@@ -26,12 +26,46 @@
             <nav>
                 <div class="nav-wrapper blue-grey lighten-2 valign-wrapper">
                   <h4 class="brand-logo center">Weather Dashboard</h4>
+                  <ul id="nav-mobile" class="right right-align">
+                      <li><a class="waves-effect modal-trigger" href="#modal1" id="nav-about">About</a></li>
+                      
+                  </ul>
                 </div>
             </nav>
+            
         </header>
         
 
         <main>
+            <div id="modal1" class="modal modal-fixed-footer z-depth-3">
+                <div class="modal-content">
+                    <h5>About "Weather Dashboard"</h4>
+                    <p>A simple, generic interactive weather forecast dashboard.</p>
+                    <table id="modal-table">
+                        <tbody>
+                            <tr>
+                                <td><strong>AUTHOR</strong></td>
+                                <td>Bryan Civils</td>
+                            </tr>
+                            <tr>
+                                <td><strong>INTERNAL ASSIGNMENT ID</strong></td>
+                                <td>06</td>
+                            </tr>
+                            <tr>
+                                <td><strong>WEATHER APIS PROVIDED BY</strong></td>
+                                <td><a href="https://openweathermap.org/" target="_blank" rel="noopener noreferrer">OpenWeather</a></td>
+                            </tr>
+                            <tr>
+                                <td><strong>GITHUB</strong></td>
+                                <td><a href="https://github.com/monstertruckdog/weather-dashboard" target="_blank" rel="noopener noreferrer">weather-dashboard</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="modal-fixed-footer">
+                        <a href="#!" class="modal-close blue-grey waves-effect waves-green btn-flat" id="modal-close-btn">Close</a>
+                    </div>
+                </div>
+            </div>
             <div class="container-all">
                 <div class="all-aside-container">
                     <aside class="container-aside">
@@ -73,21 +107,20 @@
                     </aside>
                 </div>
                 <div class="container-master-weather">
-                    <div class="all-weather-container">
-                        <div class="current-weather-container">
+                    <div class="all-weather-container" id="all-weather-container">
+                        <div class="current-weather-container" id="current-container">
     
                         </div>
     
-                        <div class="fiveday-container">
+                        <div class="fiveday-container" id="five-container">
     
                         </div>
                     </div>
                 </div> 
             </div>
         </main>
-
-        <!--<script type="text/javascript" src="js/materialize.min.js"></script>-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
         <script src="./assets/js/script.js"></script>
     </body>
